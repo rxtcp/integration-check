@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/appdb
+    username: app
+    password: app
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: integration_check
+        jdbc.time_zone: UTC
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    validate-on-migrate: true
+    clean-disabled: true
+    create-schemas: true
+    default-schema: integration_check
+    schemas: integration_check
+    placeholders:
+      app_schema: integration_check
+
+logging:
+  level:
+    org.flywaydb: DEBUG
+
+app:
+  jobs:
+    integration-health-check:
+      enabled: true
+      cron: "${INTEGRATION_HEALTH_CHECK_CRON}:0 */1 * * * *"
+      zone: "${INTEGRATION_HEALTH_CHECK_ZONE}:Europe/Moscow"
