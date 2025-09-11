@@ -4,6 +4,13 @@ spring:
     username: app
     password: app
     driver-class-name: org.postgresql.Driver
+    hikari:
+      maximumPoolSize: 32         # надо калибровать
+      minimumIdle: 4
+
+  batch:
+    job:
+      enabled: false # не автозапускать джобы при старте контекста
 
   jpa:
     hibernate:

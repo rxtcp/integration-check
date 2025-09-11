@@ -106,21 +106,55 @@ CREATE INDEX IF NOT EXISTS ix_h_check_result__check_time
     ON ${app_schema}.h_check_result (check_id, started_at DESC);
 COMMENT ON INDEX ${app_schema}.ix_h_check_result__check_time IS 'Поиск результатов по проверке и времени';
 
--- -----------------------------
--- Блокировки выполнения
--- -----------------------------
-CREATE TABLE IF NOT EXISTS ${app_schema}.h_check_lock
-(
-    check_id     BIGINT    NOT NULL,
-    cluster_id   TEXT      NOT NULL,
-    locked_until TIMESTAMP NOT NULL,
+-- В манифесте пода надо добавить окружение с именем пода:
+-- env:
+--   - name: POD_NAME
+--     valueFrom:
+--       fieldRef:
+--         fieldPath: metadata.name
 
-    CONSTRAINT pk_h_check_lock PRIMARY KEY (check_id, cluster_id),
-    CONSTRAINT fk_h_check_lock__check FOREIGN KEY (check_id) REFERENCES ${app_schema}.h_check (id) ON DELETE CASCADE
+create table if not exists batch_singleton (
+    job_name  text primary key,
+    owner_id  text not null,      -- активный под
+    enabled   boolean not null,   -- включен ли запуск вообще
+    since     timestamptz not null default now()
 );
-COMMENT ON TABLE ${app_schema}.h_check_lock IS 'Блокировка выполнения проверки внутри кластера (check_id + cluster_id)';
-COMMENT ON COLUMN ${app_schema}.h_check_lock.locked_until IS 'Момент истечения блокировки; после — блокировка может быть перехвачена';
 
-CREATE INDEX IF NOT EXISTS ix_h_check_lock__locked_until
-    ON ${app_schema}.h_check_lock (locked_until);
-COMMENT ON INDEX ${app_schema}.ix_h_check_lock__locked_until IS 'Ускоряет выборку блокировок, истёкших по времени';
+-- начальная инициализация: все в standby
+insert into batch_singleton(job_name, owner_id, enabled)
+values ('integrationHealthJob', 'NONE', false)
+on conflict (job_name) do nothing;
+
+-- -- Включить job и назначить владельца pod-A:
+-- update batch_singleton
+-- set owner_id = 'pod-A', enabled = true, since = now()
+-- where job_name = 'integrationHealthJob';
+--
+-- -- Переключить на pod-B:
+-- update batch_singleton
+-- set owner_id = 'pod-B', since = now()
+-- where job_name = 'integrationHealthJob';
+--
+-- -- Полностью выключить (все в standby):
+-- update batch_singleton
+-- set enabled = false, since = now()
+-- where job_name = 'integrationHealthJob';
+
+-- -- -----------------------------
+-- -- Блокировки выполнения
+-- -- -----------------------------
+-- CREATE TABLE IF NOT EXISTS ${app_schema}.h_check_lock
+-- (
+--     check_id     BIGINT    NOT NULL,
+--     cluster_id   TEXT      NOT NULL,
+--     locked_until TIMESTAMP NOT NULL,
+--
+--     CONSTRAINT pk_h_check_lock PRIMARY KEY (check_id, cluster_id),
+--     CONSTRAINT fk_h_check_lock__check FOREIGN KEY (check_id) REFERENCES ${app_schema}.h_check (id) ON DELETE CASCADE
+-- );
+-- COMMENT ON TABLE ${app_schema}.h_check_lock IS 'Блокировка выполнения проверки внутри кластера (check_id + cluster_id)';
+-- COMMENT ON COLUMN ${app_schema}.h_check_lock.locked_until IS 'Момент истечения блокировки; после — блокировка может быть перехвачена';
+--
+-- CREATE INDEX IF NOT EXISTS ix_h_check_lock__locked_until
+--     ON ${app_schema}.h_check_lock (locked_until);
+-- COMMENT ON INDEX ${app_schema}.ix_h_check_lock__locked_until IS 'Ускоряет выборку блокировок, истёкших по времени';
