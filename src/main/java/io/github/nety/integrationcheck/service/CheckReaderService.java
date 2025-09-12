@@ -15,6 +15,6 @@ public class CheckReaderService implements CheckReader{
 
     @Override
     public List<Check> readChecks() {
-        return List.of();
+        return checkRepository.findDueChecks();
     }
 }

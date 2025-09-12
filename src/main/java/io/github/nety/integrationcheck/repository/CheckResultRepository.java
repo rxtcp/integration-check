@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CheckResultRepository extends JpaRepository<CheckResult, Long>{
+public interface CheckResultRepository extends JpaRepository<CheckResult, Long> {
 }
