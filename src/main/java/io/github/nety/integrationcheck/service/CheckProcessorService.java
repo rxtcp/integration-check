@@ -15,6 +15,7 @@ public class CheckProcessorService implements CheckProcessor {
 
     private final CheckStrategyFactory strategyFactory;
 
+    @Transactional(propagation = NOT_SUPPORTED)
     @Override
     public CheckResult process(Check check) {
         return strategyFactory.getStrategy(check.getTypeCode())

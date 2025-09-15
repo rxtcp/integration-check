@@ -10,7 +10,7 @@ public class HttpCheckStrategy implements CheckStrategy {
 
     @Override
     public CheckType getType() {
-        return CheckType.HTTP;
+        return CheckType.REST_API;
     }
 
     @Override

@@ -5,4 +5,5 @@ import io.github.nety.integrationcheck.domain.CheckResult;
 public interface CheckResultWriter {
 
     CheckResult saveResult(CheckResult results);
+
 }

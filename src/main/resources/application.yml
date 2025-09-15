@@ -1,3 +1,22 @@
+app:
+  time:
+    zone: Europe/Moscow
+
+  spring-batch:
+    job-launcher:
+      thread-name-prefix: {JOB_LAUNCHER_THREAD_NAME_PREFIX:job-launcher-}
+      concurrency-limit: ${JOB_LAUNCHER_CONCURRENCY_LIMIT:20}
+    jobs:
+      integration-health-check-job:
+        chunk-size: ${HEALTH_CHECK_CHUNK_SIZE:1}
+        concurrency-limit: ${HEALTH_CHECK_CONCURRENCY_LIMIT:20}
+        thread-name-prefix: ${HEALTH_CHECK_THREAD_NAME_PREFIX:check-worker-}
+        schedule:
+          enabled: ${HEALTH_CHECK_SCHEDULE_ENABLED:true}
+          cron: "${INTEGRATION_HEALTH_CHECK_CRON:0/30 * * * * *}"
+          zone: "${JOB_TIME_ZONE:${app.time.zone}}"
+          window-seconds: 30
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5433/appdb
@@ -17,7 +36,7 @@ spring:
       ddl-auto: validate
     properties:
       hibernate:
-        default_schema: integration_check
+        default_schema: integration_health_check
         jdbc.time_zone: UTC
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
@@ -27,18 +46,7 @@ spring:
     validate-on-migrate: true
     clean-disabled: true
     create-schemas: true
-    default-schema: integration_check
-    schemas: integration_check
+    default-schema: integration_health_check
+    schemas: integration_health_check
     placeholders:
-      app_schema: integration_check
-
-logging:
-  level:
-    org.flywaydb: DEBUG
-
-app:
-  jobs:
-    integration-health-check:
-      enabled: true
-      cron: "${INTEGRATION_HEALTH_CHECK_CRON}:0 */1 * * * *"
-      zone: "${INTEGRATION_HEALTH_CHECK_ZONE}:Europe/Moscow"
+      app_schema: integration_health_check
