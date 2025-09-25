@@ -1,52 +1,118 @@
+# Принцип подстановки значений: ${ENV_VAR:default}
+# Если переменная окружения не задана, берётся значение после двоеточия.
+
 app:
   time:
+    # Базовый часовой пояс приложения (используется по умолчанию для расписаний и пр.)
     zone: Europe/Moscow
 
+  db:
+    # Имя схемы БД. Можно переопределить через ENV DB_SCHEMA
+    schema: ${DB_SCHEMA:integration_health_check}
+
   spring-batch:
+    # Настройки общего лаунчера заданий Spring Batch
     job-launcher:
-      thread-name-prefix: {JOB_LAUNCHER_THREAD_NAME_PREFIX:job-launcher-}
+      virtual-threads-enabled: ${JOB_LAUNCHER_VIRTUAL_THREADS_ENABLED:true}
+      # Префикс для имён потоков лаунчера
+      thread-name-prefix: ${JOB_LAUNCHER_THREAD_NAME_PREFIX:job-launcher-}
+      # Максимальное число одновременно выполняемых задач лаунчером
       concurrency-limit: ${JOB_LAUNCHER_CONCURRENCY_LIMIT:20}
+
     jobs:
+      # Конкретная джоба интеграционного health-check'а
       integration-health-check-job:
-        chunk-size: ${HEALTH_CHECK_CHUNK_SIZE:1}
+        # Предел параллельности для потоков этой джобы
         concurrency-limit: ${HEALTH_CHECK_CONCURRENCY_LIMIT:20}
+        # Префикс имён рабочих потоков этой джобы
         thread-name-prefix: ${HEALTH_CHECK_THREAD_NAME_PREFIX:check-worker-}
+
+        virtual-threads-enabled: ${HEALTH_CHECK_JOB_VIRTUAL_THREADS_ENABLED:true}
+
+        # Расписание запуска джобы
         schedule:
+          # Включение/выключение планового запуска по расписанию
           enabled: ${HEALTH_CHECK_SCHEDULE_ENABLED:true}
+          # Cron-выражение: каждые 30 секунд
           cron: "${INTEGRATION_HEALTH_CHECK_CRON:0/30 * * * * *}"
+          # Часовой пояс для расписания.
+          # По умолчанию берёт JOB_TIME_ZONE, иначе app.time.zone
           zone: "${JOB_TIME_ZONE:${app.time.zone}}"
-          window-seconds: 30
+          # Допустимое «окно» (сек) для подхвата пропущенного запуска
+          # при задержках/дрейфе таймеров
+          window-seconds: ${HEALTH_CHECK_WINDOW_SECONDS:30}
 
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5433/appdb
-    username: app
-    password: app
-    driver-class-name: org.postgresql.Driver
-    hikari:
-      maximumPoolSize: 32         # надо калибровать
-      minimumIdle: 4
+  # Имя приложения
+  application.name: integration-health-check
 
-  batch:
-    job:
-      enabled: false # не автозапускать джобы при старте контекста
+  datasource:
+    # JDBC-URL БД
+    url: "${DB_URL}"
+    # Пользователь БД (ENV DB_USERNAME)
+    username: "${DB_USERNAME}"
+    # Пароль БД (ENV DB_PASSWORD)
+    password: "${DB_PASSWORD}"
+    # Драйвер JDBC
+    driver-class-name: org.postgresql.Driver
+
+    hikari:
+      # Схема по умолчанию для соединений пула
+      schema: ${app.db.schema}
+      # Максимальный размер пула соединений
+      maximumPoolSize: ${DB_POOL_MAX_SIZE:20}
+      # Минимальное количество простаивающих соединений
+      minimumIdle: ${DB_POOL_MIN_IDLE:10}
 
   jpa:
     hibernate:
+      # Стратегия DDL: проверять схему, но не изменять (create/update/none/validate)
       ddl-auto: validate
     properties:
       hibernate:
-        default_schema: integration_health_check
-        jdbc.time_zone: UTC
+        # Схема по умолчанию для Hibernate
+        default_schema: ${app.db.schema}
+    # Диалект SQL для Postgres
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   flyway:
+    # Включение миграций Flyway при старте
     enabled: true
-    locations: classpath:db/migration
-    validate-on-migrate: true
+    # Путь к скриптам миграций
+    locations:
+      - classpath:db/migration
+    # Запрет команды clean (безопасность)
     clean-disabled: true
+    # Если БД «непустая», создавать baseline автоматически
+    baseline-on-migrate: true
+    # Проверять актуальность (checksum) миграций при старте
+    validate-on-migrate: true
+    # Создавать схемы при необходимости
     create-schemas: true
-    default-schema: integration_health_check
-    schemas: integration_health_check
+    # Схема по умолчанию для миграций
+    default-schema: ${app.db.schema}
+    # Список схем, к которым применяются миграции
+    schemas:
+      - ${app.db.schema}
+    # Плейсхолдеры для использования внутри SQL-скриптов миграций
     placeholders:
-      app_schema: integration_health_check
+      app_schema: ${DB_SCHEMA:integration_health_check}
+
+  batch:
+    job:
+      # Не запускать Spring Batch джобы автоматически при старте приложения.
+      # Управляем запуском вручную/расписанием.
+      enabled: false
+    jdbc:
+      # Инициализировать таблицы метаданных Spring Batch (BATCH_*) при старте,
+      # если их ещё нет (always/embedded/never)
+      initialize-schema: always
+
+logging:
+  # Базовые уровни
+  level:
+    root: ${LOG_LEVEL_ROOT:INFO}                         # общий уровень
+    io.github.nety.integrationcheck: ${LOG_LEVEL_APP:INFO}     # приложение
+    org.springframework.batch: ${LOG_LEVEL_SPRING_BATCH:INFO}  # Spring Batch
+    org.hibernate.SQL: ${LOG_LEVEL_HIBERNATE_SQL:WARN}         # SQL
+    org.hibernate.orm.jdbc.bind: ${LOG_LEVEL_HIBERNATE_BIND:WARN} # параметры

@@ -1,0 +1,16 @@
+spring:
+  config:
+    import: "classpath:application.yml"
+
+  datasource:
+    url: jdbc:h2:mem:app;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  flyway:
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    clean-disabled: false
+    validate-on-migrate: false
