@@ -1,0 +1,1 @@
+SET LOCAL search_path = integration_health_check;

@@ -1,6 +1,4 @@
-spring:
-  config:
-    import: "classpath:application.yml"
+application:
 
   datasource:
     url: jdbc:h2:mem:app;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
@@ -8,9 +6,35 @@ spring:
     password:
     driver-class-name: org.h2.Driver
 
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      database-platform: org.hibernate.dialect.H2Dialect
+
   flyway:
-    url: ${spring.datasource.url}
-    user: ${spring.datasource.username}
-    password: ${spring.datasource.password}
+    enabled: true
+    create-schemas: true
+
+  spring-batch:
+    initialize-schema: always
+    jobs:
+      integration-health-check-job:
+        worker-step:
+          thread-name-prefix: itest-
+          concurrency-limit: 4
+          virtual-threads-enabled: true
+
+spring:
+  config:
+    import: "classpath:application.yml"
+
+  datasource:
+    url: ${application.datasource.url}
+    username: ${application.datasource.username}
+    password: ${application.datasource.password}
+    driver-class-name: ${application.datasource.driver-class-name}
+
+  flyway:
+    locations: classpath:db/migration
     clean-disabled: false
     validate-on-migrate: false
