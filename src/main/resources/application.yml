@@ -27,7 +27,9 @@ application:
 
   jpa:
     hibernate:
+      # Стратегия управления схемой БД: none|validate|update|create|create-drop.
       ddl-auto: ${JPA_HIBERNATE_DDL_AUTO:none}
+      # Диалект SQL для целевой СУБД. Определяет синтаксис генерируемых запросов и соответствие типов.
       database-platform: ${JPA_HIBERNATE_DATABASE_PLATFORM:org.hibernate.dialect.PostgreSQLDialect}
 
   flyway:
@@ -99,7 +101,7 @@ spring:
 
   jpa:
     hibernate:
-      # Отключаем автоматическое DDL от Hibernate.
+      # Настройка автоматического DDL от Hibernate. По умолчанию none.
       ddl-auto: ${application.jpa.hibernate.ddl-auto}
     properties:
       hibernate:
