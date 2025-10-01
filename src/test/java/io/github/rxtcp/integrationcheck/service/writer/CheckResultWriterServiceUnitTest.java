@@ -3,7 +3,7 @@ package io.github.rxtcp.integrationcheck.service.writer;
 import io.github.rxtcp.integrationcheck.dto.CheckResultDto;
 import io.github.rxtcp.integrationcheck.entity.Check;
 import io.github.rxtcp.integrationcheck.entity.CheckResult;
-import io.github.rxtcp.integrationcheck.enums.CheckRunStatus;
+import io.github.rxtcp.integrationcheck.domain.CheckRunStatus;
 import io.github.rxtcp.integrationcheck.repository.CheckResultRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 
-import static io.github.rxtcp.integrationcheck.enums.CheckRunStatus.PROCESSING;
+import static io.github.rxtcp.integrationcheck.domain.CheckRunStatus.PROCESSING;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;

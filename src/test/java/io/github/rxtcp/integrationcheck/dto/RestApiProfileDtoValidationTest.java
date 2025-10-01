@@ -1,6 +1,6 @@
 package io.github.rxtcp.integrationcheck.dto;
 
-import io.github.rxtcp.integrationcheck.enums.HttpMethod;
+import io.github.rxtcp.integrationcheck.domain.HttpMethod;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

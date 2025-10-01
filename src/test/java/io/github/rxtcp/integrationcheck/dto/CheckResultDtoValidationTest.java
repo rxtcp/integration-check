@@ -1,7 +1,7 @@
 package io.github.rxtcp.integrationcheck.dto;
 
-import io.github.rxtcp.integrationcheck.enums.CheckRunStatus;
-import io.github.rxtcp.integrationcheck.enums.FailureReason;
+import io.github.rxtcp.integrationcheck.domain.CheckRunStatus;
+import io.github.rxtcp.integrationcheck.domain.FailureReason;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

@@ -2,7 +2,7 @@ package io.github.rxtcp.integrationcheck.entity;
 
 import io.github.rxtcp.integrationcheck.common.contract.Identifiable;
 import io.github.rxtcp.integrationcheck.entity.support.HibernateEntityUtil;
-import io.github.rxtcp.integrationcheck.enums.CheckType;
+import io.github.rxtcp.integrationcheck.domain.CheckType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

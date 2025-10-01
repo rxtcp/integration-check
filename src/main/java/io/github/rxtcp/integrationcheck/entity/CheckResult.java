@@ -2,8 +2,8 @@ package io.github.rxtcp.integrationcheck.entity;
 
 import io.github.rxtcp.integrationcheck.common.contract.Identifiable;
 import io.github.rxtcp.integrationcheck.entity.support.HibernateEntityUtil;
-import io.github.rxtcp.integrationcheck.enums.CheckRunStatus;
-import io.github.rxtcp.integrationcheck.enums.FailureReason;
+import io.github.rxtcp.integrationcheck.domain.CheckRunStatus;
+import io.github.rxtcp.integrationcheck.domain.FailureReason;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

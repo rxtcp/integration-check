@@ -5,9 +5,9 @@ import io.github.rxtcp.integrationcheck.dto.CheckResultDto;
 import io.github.rxtcp.integrationcheck.dto.RestApiProfileDto;
 import io.github.rxtcp.integrationcheck.entity.Check;
 import io.github.rxtcp.integrationcheck.entity.CheckResult;
-import io.github.rxtcp.integrationcheck.enums.CheckRunStatus;
-import io.github.rxtcp.integrationcheck.enums.CheckType;
-import io.github.rxtcp.integrationcheck.enums.HttpMethod;
+import io.github.rxtcp.integrationcheck.domain.CheckRunStatus;
+import io.github.rxtcp.integrationcheck.domain.CheckType;
+import io.github.rxtcp.integrationcheck.domain.HttpMethod;
 import io.github.rxtcp.integrationcheck.mapper.CheckMapper;
 import io.github.rxtcp.integrationcheck.service.processor.CheckProcessor;
 import io.github.rxtcp.integrationcheck.service.reader.CheckReader;
@@ -25,8 +25,8 @@ import org.mockito.Mock;
 
 import java.time.LocalDateTime;
 
-import static io.github.rxtcp.integrationcheck.enums.CheckRunStatus.FAILED;
-import static io.github.rxtcp.integrationcheck.enums.FailureReason.ERROR;
+import static io.github.rxtcp.integrationcheck.domain.CheckRunStatus.FAILED;
+import static io.github.rxtcp.integrationcheck.domain.FailureReason.ERROR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.mockito.ArgumentMatchers.any;

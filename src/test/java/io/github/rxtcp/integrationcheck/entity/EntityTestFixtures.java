@@ -1,7 +1,7 @@
 package io.github.rxtcp.integrationcheck.entity;
 
-import io.github.rxtcp.integrationcheck.enums.CheckType;
-import io.github.rxtcp.integrationcheck.enums.HttpMethod;
+import io.github.rxtcp.integrationcheck.domain.CheckType;
+import io.github.rxtcp.integrationcheck.domain.HttpMethod;
 
 import java.time.LocalDateTime;
 

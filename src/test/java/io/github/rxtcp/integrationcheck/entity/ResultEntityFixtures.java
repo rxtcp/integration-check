@@ -1,8 +1,8 @@
 package io.github.rxtcp.integrationcheck.entity;
 
-import io.github.rxtcp.integrationcheck.enums.CheckRunStatus;
-import io.github.rxtcp.integrationcheck.enums.CheckType;
-import io.github.rxtcp.integrationcheck.enums.FailureReason;
+import io.github.rxtcp.integrationcheck.domain.CheckRunStatus;
+import io.github.rxtcp.integrationcheck.domain.CheckType;
+import io.github.rxtcp.integrationcheck.domain.FailureReason;
 
 import java.time.LocalDateTime;
 

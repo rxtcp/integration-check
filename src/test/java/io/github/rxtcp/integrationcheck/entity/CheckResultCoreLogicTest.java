@@ -1,7 +1,7 @@
 package io.github.rxtcp.integrationcheck.entity;
 
-import io.github.rxtcp.integrationcheck.enums.CheckRunStatus;
-import io.github.rxtcp.integrationcheck.enums.FailureReason;
+import io.github.rxtcp.integrationcheck.domain.CheckRunStatus;
+import io.github.rxtcp.integrationcheck.domain.FailureReason;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;

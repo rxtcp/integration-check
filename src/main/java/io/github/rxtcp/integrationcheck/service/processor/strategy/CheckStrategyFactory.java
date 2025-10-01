@@ -1,6 +1,6 @@
 package io.github.rxtcp.integrationcheck.service.processor.strategy;
 
-import io.github.rxtcp.integrationcheck.enums.CheckType;
+import io.github.rxtcp.integrationcheck.domain.CheckType;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

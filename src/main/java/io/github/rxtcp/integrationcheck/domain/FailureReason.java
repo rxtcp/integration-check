@@ -1,4 +1,4 @@
-package io.github.rxtcp.integrationcheck.enums;
+package io.github.rxtcp.integrationcheck.domain;
 
 /**
  * Причина неуспеха выполнения проверки.

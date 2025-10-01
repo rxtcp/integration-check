@@ -1,6 +1,6 @@
 package io.github.rxtcp.integrationcheck.entity;
 
-import io.github.rxtcp.integrationcheck.enums.CheckType;
+import io.github.rxtcp.integrationcheck.domain.CheckType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;

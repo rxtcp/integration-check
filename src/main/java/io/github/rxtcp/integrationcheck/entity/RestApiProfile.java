@@ -1,7 +1,7 @@
 package io.github.rxtcp.integrationcheck.entity;
 
 import io.github.rxtcp.integrationcheck.entity.support.HibernateEntityUtil;
-import io.github.rxtcp.integrationcheck.enums.HttpMethod;
+import io.github.rxtcp.integrationcheck.domain.HttpMethod;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;

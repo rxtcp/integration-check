@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
-import static io.github.rxtcp.integrationcheck.enums.CheckRunStatus.PROCESSING;
+import static io.github.rxtcp.integrationcheck.domain.CheckRunStatus.PROCESSING;
 import static org.springframework.transaction.annotation.Isolation.READ_COMMITTED;
 import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
 

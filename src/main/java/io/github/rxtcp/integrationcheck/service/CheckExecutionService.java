@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import static io.github.rxtcp.integrationcheck.enums.CheckRunStatus.FAILED;
-import static io.github.rxtcp.integrationcheck.enums.FailureReason.ERROR;
+import static io.github.rxtcp.integrationcheck.domain.CheckRunStatus.FAILED;
+import static io.github.rxtcp.integrationcheck.domain.FailureReason.ERROR;
 
 /**
  * Оркестрация выполнения проверки: чтение, запуск, фиксация результата, обновление расписания.

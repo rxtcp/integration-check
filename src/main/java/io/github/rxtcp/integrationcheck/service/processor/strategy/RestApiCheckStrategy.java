@@ -4,7 +4,7 @@ import io.github.rxtcp.integrationcheck.common.net.TimeoutDetector;
 import io.github.rxtcp.integrationcheck.dto.CheckDto;
 import io.github.rxtcp.integrationcheck.dto.CheckResultDto;
 import io.github.rxtcp.integrationcheck.dto.RestApiProfileDto;
-import io.github.rxtcp.integrationcheck.enums.CheckType;
+import io.github.rxtcp.integrationcheck.domain.CheckType;
 import io.github.rxtcp.integrationcheck.integration.http.RestRequestFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,11 +14,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
-import static io.github.rxtcp.integrationcheck.enums.CheckRunStatus.FAILED;
-import static io.github.rxtcp.integrationcheck.enums.CheckRunStatus.SUCCEEDED;
-import static io.github.rxtcp.integrationcheck.enums.FailureReason.ERROR;
-import static io.github.rxtcp.integrationcheck.enums.FailureReason.HTTP_STATUS_MISMATCH;
-import static io.github.rxtcp.integrationcheck.enums.FailureReason.TIMEOUT;
+import static io.github.rxtcp.integrationcheck.domain.CheckRunStatus.FAILED;
+import static io.github.rxtcp.integrationcheck.domain.CheckRunStatus.SUCCEEDED;
+import static io.github.rxtcp.integrationcheck.domain.FailureReason.ERROR;
+import static io.github.rxtcp.integrationcheck.domain.FailureReason.HTTP_STATUS_MISMATCH;
+import static io.github.rxtcp.integrationcheck.domain.FailureReason.TIMEOUT;
 
 /**
  * Стратегия проверки REST API ({@link CheckType#REST_API}).

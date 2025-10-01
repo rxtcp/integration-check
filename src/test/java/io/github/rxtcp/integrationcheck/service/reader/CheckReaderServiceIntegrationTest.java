@@ -2,8 +2,8 @@ package io.github.rxtcp.integrationcheck.service.reader;
 
 import io.github.rxtcp.integrationcheck.entity.Check;
 import io.github.rxtcp.integrationcheck.entity.RestApiProfile;
-import io.github.rxtcp.integrationcheck.enums.CheckType;
-import io.github.rxtcp.integrationcheck.enums.HttpMethod;
+import io.github.rxtcp.integrationcheck.domain.CheckType;
+import io.github.rxtcp.integrationcheck.domain.HttpMethod;
 import io.github.rxtcp.integrationcheck.repository.CheckRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;

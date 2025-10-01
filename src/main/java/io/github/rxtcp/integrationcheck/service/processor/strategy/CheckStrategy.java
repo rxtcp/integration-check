@@ -2,7 +2,7 @@ package io.github.rxtcp.integrationcheck.service.processor.strategy;
 
 import io.github.rxtcp.integrationcheck.dto.CheckDto;
 import io.github.rxtcp.integrationcheck.dto.CheckResultDto;
-import io.github.rxtcp.integrationcheck.enums.CheckType;
+import io.github.rxtcp.integrationcheck.domain.CheckType;
 
 /**
  * Стратегия выполнения проверки (Strategy) для конкретного {@link CheckType}.

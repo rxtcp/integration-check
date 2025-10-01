@@ -2,7 +2,7 @@ package io.github.rxtcp.integrationcheck.service.writer;
 
 import io.github.rxtcp.integrationcheck.entity.Check;
 import io.github.rxtcp.integrationcheck.entity.CheckResult;
-import io.github.rxtcp.integrationcheck.enums.CheckType;
+import io.github.rxtcp.integrationcheck.domain.CheckType;
 import io.github.rxtcp.integrationcheck.repository.CheckRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;

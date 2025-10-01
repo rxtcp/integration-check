@@ -2,8 +2,8 @@ package io.github.rxtcp.integrationcheck.service.processor.strategy;
 
 import io.github.rxtcp.integrationcheck.dto.CheckDto;
 import io.github.rxtcp.integrationcheck.dto.CheckResultDto;
-import io.github.rxtcp.integrationcheck.enums.CheckRunStatus;
-import io.github.rxtcp.integrationcheck.enums.CheckType;
+import io.github.rxtcp.integrationcheck.domain.CheckRunStatus;
+import io.github.rxtcp.integrationcheck.domain.CheckType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;

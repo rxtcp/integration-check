@@ -17,17 +17,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
 @SpringBootTest(
-        classes = IntegrationCheckApplication.class,
+        classes = IntegrationHealthCheckApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.NONE
 )
 @DisplayName("IntegrationCheckApplication — контекст и инфраструктура планирования")
 @DisplayNameGeneration(ReplaceUnderscores.class)
-class IntegrationCheckApplicationContextTest {
+class IntegrationHealthCheckApplicationContextTest {
 
     private final ApplicationContext context;
 
     @Autowired
-    IntegrationCheckApplicationContextTest(ApplicationContext context) {
+    IntegrationHealthCheckApplicationContextTest(ApplicationContext context) {
         this.context = context;
     }
 
