@@ -54,6 +54,8 @@ application:
   spring-batch:
     # Управление инициализацией DDL для Spring Batch через Spring Boot.
     initialize-schema: ${BATCH_INITIALIZE_SCHEMA:always}
+    # Уровень изоляции транзакции при создании таблиц/метаданных Spring Batch
+    isolation-level-for-create: ${BATCH_ISOLATION_LEVEL_FOR_CREATE:read_committed}
 
     job-launcher:
       # Виртуальные потоки.
@@ -133,6 +135,8 @@ spring:
       table-prefix: ${application.datasource.schema}.BATCH_
       # Путь к DDL-скрипту инициализации (для PostgreSQL). Используется, если initialize-schema=always.
       schema: classpath:db/batch/schema-postgresql.sql
+      # Уровень изоляции транзакции при создании таблиц/метаданных Spring Batch (значения из java.sql.Connection.*).
+      isolation-level-for-create: ${application.spring-batch.isolation-level-for-create}
 
 logging:
   level:
